@@ -21,24 +21,40 @@ public class TouchInput : MonoBehaviour, IInput
         
     }
 
-    float t = 0.0f;
     void Update()
     {
-        if(Input.GetKey(KeyCode.A))
+        if (Input.touchCount  == 1)
         {
-            _rawValue = -1.0f;
-            t = 0.0f;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            _rawValue =  1.0f;
-            t = 0.0f;
+            Touch touch = Input.GetTouch(0);
+            float normalized = touch.rawPosition.x/Screen.width-0.5f;
+            if (normalized > 0)
+            {
+                _rawValue =  1.0f;
+            }
+            else if(normalized < 0)
+            {
+                _rawValue =  -1.0f;
+            }
         }
         else
         {
-            _rawValue = 0.0f;
+            _rawValue =  0.0f;
         }
-        t+=Time.deltaTime * Mathf.Abs(_rawValue);
-        _value = Mathf.Lerp(_value, _rawValue, t * 10.0f);
+        //if(Input.GetKey(KeyCode.A))
+        //{
+        //    _rawValue = -1.0f;
+        //    t = 0.0f;
+        //}
+        //else if (Input.GetKey(KeyCode.D))
+        //{
+        //    _rawValue =  1.0f;
+        //    t = 0.0f;
+        //}
+        //else
+        //{
+        //    _rawValue = 0.0f;
+        //}
+        //t+=Time.deltaTime * Mathf.Abs(_rawValue);
+        //_value = Mathf.Lerp(_value, _rawValue, t * 10.0f);
     }
 }

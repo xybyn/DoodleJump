@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
 using Zenject;
 using static UnityEngine.GraphicsBuffer;
 
@@ -20,12 +22,26 @@ public class PlayerInputController : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    public UnityEvent OnPlayerDied = new UnityEvent();
+    public UnityEvent<float> OnNewHeightReached = new UnityEvent<float>();
 
+    private Vector3 _cachedPosition;
+    private float _startHeight = 0.0f;
+    private float _maxHeight = 0.0f;
+    public void Restart()
+    {
+        gameObject.SetActive(true);
+        transform.position = _cachedPosition;
+        _maxHeight = 0.0f;
+    }
     private void Start()
     {
+        _cachedPosition = transform.position;
         _rb = GetComponent<Rigidbody2D>();
+        _startHeight = _rb.transform.position.y;
+        Restart();
     }
-    private void FixedUpdate()
+    private void  Update()
     {
         float value = _input.GetHorizontalRaw();
         _rb.velocity = new Vector2(_horizontalMoveSpeed * value, _rb.velocity.y);
@@ -39,19 +55,25 @@ public class PlayerInputController : MonoBehaviour
             {
                 _rb.transform.position = new Vector2(_gameBorders.LeftBorderPosition.x, _rb.position.y);
             }
+            else if (_gameBorders.IntersectsLowerBorder(_rb.transform))
+            {
+                gameObject.SetActive(false);
+                OnPlayerDied.Invoke();
+            }
         }
 
+        if(_rb.position.y > _maxHeight)
+        {
+            _maxHeight = _rb.position.y;
+            OnNewHeightReached.Invoke(_maxHeight-_startHeight);
+        }
+
+
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         //_rb.AddForce(Vector2.up * 500);
-        _rb.velocity = new Vector2(_rb.velocity.x, _verticalMoveSpeed);
-    }
-    private void OnDrawGizmos()
-    {
-        if (_rb == null)
-            return;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) +  _rb.velocity);
+        if(Vector2.Dot(_rb.velocity, Vector2.up) <= 0)
+            _rb.velocity = new Vector2(_rb.velocity.x, _verticalMoveSpeed);
     }
 }

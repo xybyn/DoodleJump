@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Keeps constant camera width instead of height, works for both Orthographic & Perspective cameras
+/// Keeps constant camera width instead of _height, works for both Orthographic & Perspective cameras
 /// Made for tutorial https://youtu.be/0cmxFjP375Y
 /// </summary>
 public class CameraConstantWidth : MonoBehaviour
