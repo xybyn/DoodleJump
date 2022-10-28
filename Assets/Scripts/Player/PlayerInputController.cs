@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 using Zenject;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerInputController : MonoBehaviour
@@ -20,11 +16,11 @@ public class PlayerInputController : MonoBehaviour
 
     [Inject] private IInput _input = null;
 
-    private Rigidbody2D _rb;
 
     public UnityEvent OnPlayerDied = new UnityEvent();
     public UnityEvent<float> OnNewHeightReached = new UnityEvent<float>();
 
+    private Rigidbody2D _rb;
     private Vector3 _cachedPosition;
     private float _startHeight = 0.0f;
     private float _maxHeight = 0.0f;
@@ -72,7 +68,6 @@ public class PlayerInputController : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //_rb.AddForce(Vector2.up * 500);
         if(Vector2.Dot(_rb.velocity, Vector2.up) <= 0)
             _rb.velocity = new Vector2(_rb.velocity.x, _verticalMoveSpeed);
     }

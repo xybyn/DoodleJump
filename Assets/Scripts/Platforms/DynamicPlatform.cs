@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DynamicPlatform : Platform
@@ -7,10 +5,6 @@ public class DynamicPlatform : Platform
     [SerializeField]
     private GameBorders _gameBorders = null;
     private Vector3 _velocity = Vector3.right;
-    protected override void Start()
-    {
-
-    }
 
     protected override void Update()
     {

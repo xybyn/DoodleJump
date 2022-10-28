@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -29,14 +28,13 @@ public class PlatformSpawner : MonoBehaviour
             Spawn();
         }
     }
-    void Start()
+    private void Start()
     {
         _originPosition = transform.position;
         Restart();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_spawnedPlatforms.Peek().IsDestroyed())
         {

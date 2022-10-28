@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TouchInput : MonoBehaviour, IInput
@@ -15,13 +13,7 @@ public class TouchInput : MonoBehaviour, IInput
     {
         return _rawValue;
     }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
+    private void Update()
     {
         if (Input.touchCount  == 1)
         {
@@ -40,21 +32,5 @@ public class TouchInput : MonoBehaviour, IInput
         {
             _rawValue =  0.0f;
         }
-        //if(Input.GetKey(KeyCode.A))
-        //{
-        //    _rawValue = -1.0f;
-        //    t = 0.0f;
-        //}
-        //else if (Input.GetKey(KeyCode.D))
-        //{
-        //    _rawValue =  1.0f;
-        //    t = 0.0f;
-        //}
-        //else
-        //{
-        //    _rawValue = 0.0f;
-        //}
-        //t+=Time.deltaTime * Mathf.Abs(_rawValue);
-        //_value = Mathf.Lerp(_value, _rawValue, t * 10.0f);
     }
 }

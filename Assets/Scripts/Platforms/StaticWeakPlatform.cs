@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StaticWeakPlatform : StaticPlatform
@@ -23,10 +21,7 @@ public class StaticWeakPlatform : StaticPlatform
         {
             if (Vector2.Dot(rb.velocity, Vector2.up) <= 0)
             {
-                //gameObject.SetActive(false);
                 Destroy(gameObject, 0.1f);
-
-
             }
         }
     }

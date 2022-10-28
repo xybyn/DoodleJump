@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class FollowingCamera : MonoBehaviour
 {
@@ -17,8 +14,8 @@ public class FollowingCamera : MonoBehaviour
     private float _maxHeight = 0.0f;
 
     private Vector3 _cachedPosition;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         _cachedPosition = transform.position;
         Restart();
@@ -30,9 +27,7 @@ public class FollowingCamera : MonoBehaviour
         transform.position = _cachedPosition;
     }
 
-    // Update is called once per frame
-
-    void Update()
+    private void Update()
     {
         if (_targetTransform == null)
             return;
